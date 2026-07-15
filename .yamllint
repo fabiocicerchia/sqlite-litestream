@@ -1,0 +1,9 @@
+# GitHub Actions pinned to full commit SHAs make lines long by design, and
+# `on:` is a legitimate key — relax the noisy stylistic rules accordingly.
+extends: relaxed
+
+rules:
+  line-length: disable
+  comments:
+    require-starting-space: true
+    min-spaces-from-content: 1

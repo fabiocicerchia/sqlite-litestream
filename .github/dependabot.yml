@@ -1,10 +1,17 @@
 version: 2
 updates:
-  - package-ecosystem: "github-actions"
-    directory: "/"
+  # Keep GitHub Actions pinned SHAs fresh.
+  - package-ecosystem: github-actions
+    directory: /
     schedule:
       interval: weekly
-  - package-ecosystem: "docker"
-    directory: "/"
+    cooldown:
+      default-days: 7 # wait before proposing newly published versions
+
+  # Keep the Docker base images up to date.
+  - package-ecosystem: docker
+    directory: /
     schedule:
       interval: weekly
+    cooldown:
+      default-days: 7

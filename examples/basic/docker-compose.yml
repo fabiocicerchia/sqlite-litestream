@@ -1,0 +1,16 @@
+# Minimal end-to-end example: litestream replicates a SQLite database to a
+# local file replica (a stand-in for S3). Both the db and the replica live in
+# named volumes so you can restart and watch the cold-start restore work.
+services:
+  litestream:
+    image: ghcr.io/fabiocicerchia/sqlite-litestream
+    environment:
+      DB_PATH: /data/app.db
+      REPLICA_URL: file:///replica
+    volumes:
+      - data:/data
+      - replica:/replica
+
+volumes:
+  data:
+  replica:

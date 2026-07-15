@@ -1,13 +1,19 @@
 # Security Policy
 
-## Supported versions
+## Supported Versions
 
-Only the latest release is supported with security updates.
+| Version  | Supported |
+| -------- | --------- |
+| latest   | ✅        |
+| < latest | ❌        |
 
-## Reporting a vulnerability
+## Reporting a Vulnerability
 
-Please do **not** open a public issue for security problems. Instead, use
-GitHub's private vulnerability reporting: go to the repository's **Security**
-tab and click **Report a vulnerability**. You will get an acknowledgement
-within a few days, and a fix or a mitigation plan as soon as possible after
-triage.
+**Do not open a public issue for security problems.**
+
+Report privately via [GitHub Security Advisories](https://github.com/fabiocicerchia/sqlite-litestream/security/advisories/new)
+(preferred) or email **cicerchia86@gmail.com**.
+
+Please include a description, reproduction steps, and impact. We aim to
+acknowledge within 48 hours and to ship a fix or mitigation as soon as
+practical, keeping you updated along the way.
