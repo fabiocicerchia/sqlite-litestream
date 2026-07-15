@@ -45,5 +45,5 @@ write → replicate → delete → restore round-trip with a file replica.
 
 ## License
 
-MIT — see [LICENSE](LICENSE). Litestream and sqlite-web keep their own
+Apache 2.0 — see [LICENSE](LICENSE). Litestream and sqlite-web keep their own
 upstream licenses.
