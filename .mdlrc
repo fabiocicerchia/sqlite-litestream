@@ -1,0 +1,3 @@
+# MD013 (line length) is noise for tables and prose that can't wrap at 80.
+# MD029: ordered lists use the "1." style repeated, which is intentional.
+rules "~MD013"

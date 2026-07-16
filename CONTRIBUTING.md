@@ -37,15 +37,14 @@ version bump.
 
 ## Releases
 
-Releases are cut by pushing a version tag; the `Release` workflow builds the
-multi-arch image, pushes it to `ghcr.io`, and creates a GitHub Release with
-auto-generated notes:
+Releases are automated by [release-please](.github/workflows/release.yml).
+Merging `feat:`/`fix:` PRs into `main` does **not** release; release-please
+keeps an open "release PR" that bumps `version.txt` + `CHANGELOG.md`. Merging
+that PR tags `vX.Y.Z`, publishes the GitHub Release, and triggers the
+multi-arch image build + push to `ghcr.io`.
 
-```sh
-git tag v0.3.13 && git push origin v0.3.13
-```
-
-Maintainers handle this — contributors don't tag or edit release notes.
+So contributors just land Conventional Commits — no tagging or manual
+changelog edits. Merging the release PR is the deliberate release step.
 
 ## License
 

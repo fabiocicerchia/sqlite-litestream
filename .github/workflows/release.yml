@@ -27,8 +27,8 @@ jobs:
     steps:
       - uses: googleapis/release-please-action@5c625bfb5d1ff62eadeeb3772007f7f66fdcf071 # v4
         id: rp
-        with:
-          release-type: simple # tracks version.txt + CHANGELOG.md
+        # Config in release-please-config.json + .release-please-manifest.json
+        # (release-type: simple → tracks version.txt + CHANGELOG.md).
 
   publish:
     needs: release-please
