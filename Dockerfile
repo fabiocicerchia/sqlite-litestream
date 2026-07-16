@@ -10,7 +10,7 @@ SHELL ["/bin/ash", "-o", "pipefail", "-c"]
 RUN curl -fsSL "https://github.com/benbjohnson/litestream/releases/download/v${LITESTREAM_VERSION}/litestream-v${LITESTREAM_VERSION}-linux-${TARGETARCH}.tar.gz" \
       | tar -xz -C / litestream
 
-FROM python:3.13-alpine3.22
+FROM python:3.14-alpine3.22
 ARG LITESTREAM_VERSION
 LABEL org.opencontainers.image.title="sqlite-litestream" \
       org.opencontainers.image.description="SQLite + Litestream replication sidecar with optional sqlite-web UI" \
