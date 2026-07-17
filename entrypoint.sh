@@ -12,19 +12,27 @@ set -eu
 
 DB_PATH="${DB_PATH:-/data/app.db}"
 CONFIG=/etc/litestream.yml
+MODE="${1:-replicate}"
 
-if [ ! -f "$CONFIG" ]; then
-  : "${REPLICA_URL:?REPLICA_URL is required when /etc/litestream.yml is not mounted}"
-  CONFIG=/tmp/litestream.yml
-  cat > "$CONFIG" <<YAML
+# Only replicate/restore touch $CONFIG — web (sqlite_web) and the custom-
+# command escape hatch below have nothing to do with litestream, so they
+# shouldn't require REPLICA_URL either.
+case "$MODE" in
+  replicate|restore)
+    if [ ! -f "$CONFIG" ]; then
+      : "${REPLICA_URL:?REPLICA_URL is required when /etc/litestream.yml is not mounted}"
+      CONFIG=/tmp/litestream.yml
+      cat > "$CONFIG" <<YAML
 dbs:
   - path: ${DB_PATH}
     replicas:
       - url: ${REPLICA_URL}
 YAML
-fi
+    fi
+    ;;
+esac
 
-case "${1:-replicate}" in
+case "$MODE" in
   replicate)
     if [ ! -f "$DB_PATH" ]; then
       echo "sqlite-litestream: ${DB_PATH} missing, attempting restore"
