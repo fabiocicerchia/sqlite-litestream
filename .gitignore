@@ -19,3 +19,6 @@ Thumbs.db
 .idea/
 .vscode/
 *.swp
+
+# gandalf's own scan-history artifacts
+reports/
