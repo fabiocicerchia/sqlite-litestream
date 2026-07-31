@@ -26,6 +26,6 @@ USER 10001
 # ponytail: liveness of the litestream binary — mode-agnostic (replicate/restore/web).
 # Upgrade to litestream's metrics HTTP addr if you enable it for real replica-lag checks.
 HEALTHCHECK --interval=30s --timeout=5s --start-period=10s --retries=3 \
-  CMD litestream version >/dev/null 2>&1 || exit 1
+  CMD ["litestream", "version"]
 ENTRYPOINT ["/sbin/tini", "--", "/usr/local/bin/entrypoint.sh"]
 CMD ["replicate"]
