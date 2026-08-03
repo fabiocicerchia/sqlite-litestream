@@ -1,0 +1,96 @@
+kind: Deployment
+replicaCount: 1        # one replicator per database; never scale up
+
+image:
+  repository: ghcr.io/fabiocicerchia/sqlite-litestream
+  tag: ""
+  pullPolicy: IfNotPresent
+imagePullSecrets: []
+
+nameOverride: ""
+fullnameOverride: ""
+
+command: []
+args: ["replicate"]
+
+env:
+  DB_PATH: /data/app.db
+  REPLICA_URL: "s3://my-bucket/app.db"
+envFrom: []          # - secretRef: {name: litestream-s3}  # AWS_ACCESS_KEY_ID / AWS_SECRET_ACCESS_KEY
+
+config:
+  mountPath: /etc/litestream
+  files: {}
+
+# Only used when kind: CronJob.
+cron:
+  schedule: "0 * * * *"
+  suspend: false
+  concurrencyPolicy: Forbid
+  successfulJobsHistoryLimit: 3
+  failedJobsHistoryLimit: 1
+  restartPolicy: OnFailure
+  backoffLimit: 3
+
+service:
+  enabled: false
+  type: ClusterIP
+  port: 9090
+  targetPort: 9090
+  annotations: {}
+
+ingress:
+  enabled: false
+  className: ""
+  annotations: {}
+  host: ""
+  path: /
+  pathType: Prefix
+  tls: []
+
+livenessProbe: {}
+readinessProbe: {}
+
+resources:
+  requests: {cpu: 50m, memory: 64Mi}
+  limits: {memory: 256Mi}
+
+# Point existingClaim at the PVC holding the SQLite file you want replicated.
+persistence:
+  enabled: true
+  mountPath: /data
+  existingClaim: ""
+  size: 1Gi
+  storageClass: ""
+  accessModes: [ReadWriteOnce]
+
+serviceAccount:
+  create: true
+  name: ""
+  annotations: {}
+
+rbac:
+  create: false
+  clusterWide: true
+  rules:
+    - apiGroups: ["*"]
+      resources: ["*"]
+      verbs: ["get", "list", "watch"]
+
+podSecurityContext:
+  runAsNonRoot: true
+  seccompProfile: {type: RuntimeDefault}
+
+securityContext:
+  allowPrivilegeEscalation: false
+  readOnlyRootFilesystem: true
+  capabilities: {drop: ["ALL"]}
+
+extraVolumes: []
+extraVolumeMounts: []
+
+podAnnotations: {}
+podLabels: {}
+nodeSelector: {}
+tolerations: []
+affinity: {}

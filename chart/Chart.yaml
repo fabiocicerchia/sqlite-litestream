@@ -1,0 +1,6 @@
+apiVersion: v2
+name: sqlite-litestream
+description: Helm chart for sqlite-litestream
+type: application
+version: 0.1.0
+appVersion: "0.1.0"
