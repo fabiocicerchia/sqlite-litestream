@@ -1,0 +1,45 @@
+sqlite-litestream
+Copyright 2026 Fabio Cicerchia
+
+This product includes software developed by
+Fabio Cicerchia (https://github.com/fabiocicerchia).
+
+The Apache-2.0 license on this repository covers the packaging only: the
+Dockerfile and the entrypoint script. The published container image
+redistributes the following third-party software, each under its own
+license:
+
+  litestream 0.3.13  Apache-2.0     https://github.com/benbjohnson/litestream
+  sqlite-web 0.6.4   MIT            https://github.com/coleifer/sqlite-web
+  SQLite 3.49.2      public domain  https://www.sqlite.org/copyright.html
+  tini 0.19.0        MIT            https://github.com/krallin/tini
+
+--------------------------------------------------------------------
+Litestream
+Copyright 2021-2026 Ben Johnson.
+Licensed under the Apache License, Version 2.0.
+https://github.com/benbjohnson/litestream/blob/main/LICENSE
+
+sqlite-web
+Copyright 2014-2026 Charles Leifer.
+Licensed under the MIT License.
+https://github.com/coleifer/sqlite-web/blob/master/LICENSE
+
+SQLite
+The SQLite source code is dedicated to the public domain by its authors.
+https://www.sqlite.org/copyright.html
+
+tini
+Copyright 2015 Thomas Orozco.
+Licensed under the MIT License.
+https://github.com/krallin/tini/blob/master/LICENSE
+--------------------------------------------------------------------
+
+sqlite-web pulls transitive Python dependencies (peewee, flask and their
+own dependencies) resolved by pip at build time; each carries its own
+license. Run `pip freeze` inside the image for the resolved set.
+
+The base image is python:3.14-alpine3.22, which contains CPython
+(PSF-2.0) on Alpine Linux. Alpine's packages carry their own licenses
+(musl MIT, busybox GPL-2.0-only); source is published at
+https://gitlab.alpinelinux.org/alpine/aports.
