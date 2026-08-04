@@ -20,6 +20,7 @@ LABEL org.opencontainers.image.title="sqlite-litestream" \
 RUN apk add --no-cache sqlite=3.49.2-r1 tini=0.19.0-r3 \
  && pip install --no-cache-dir sqlite-web==0.6.4 \
  && adduser -D -u 10001 sqlite
+COPY NOTICE /NOTICE
 COPY --from=fetch /litestream /usr/local/bin/litestream
 COPY entrypoint.sh /usr/local/bin/entrypoint.sh
 USER 10001
