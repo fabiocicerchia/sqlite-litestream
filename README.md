@@ -30,71 +30,11 @@ curl -fsSL https://raw.githubusercontent.com/fabiocicerchia/sqlite-litestream/ma
 | `restore`        | force-restore `DB_PATH`, then exit            |
 | `web`            | sqlite-web UI on `:8081` (read-only unless `WEB_WRITE=true`) |
 
-## Usage
-
-Sidecar next to your app (shared volume):
-
-```yaml
-containers:
-  - name: app
-    volumeMounts: [{ name: data, mountPath: /data }]
-  - name: litestream
-    image: ghcr.io/fabiocicerchia/sqlite-litestream
-    env:
-      - { name: DB_PATH,     value: /data/app.db }
-      - { name: REPLICA_URL, value: "s3://my-bucket/app-db" }
-    envFrom: [{ secretRef: { name: s3-credentials } }]
-    volumeMounts: [{ name: data, mountPath: /data }]
-```
-
-Cold start on an empty volume restores the latest snapshot automatically
-before replication begins — pod rescheduling "just works".
-
-Advanced control (multiple DBs, retention, age limits): mount a full config
-at `/etc/litestream.yml`; the env-driven generation then steps aside.
-
-### Enabling the web UI
-
-Add a second container off the same image in `web` mode, sharing the data
-volume with the `litestream` container above — it only needs `DB_PATH`, not
-`REPLICA_URL`:
-
-```yaml
-containers:
-  - name: litestream
-    image: ghcr.io/fabiocicerchia/sqlite-litestream
-    args: ["replicate"]
-    env:
-      - { name: DB_PATH,     value: /data/app.db }
-      - { name: REPLICA_URL, value: "s3://my-bucket/app-db" }
-    volumeMounts: [{ name: data, mountPath: /data }]
-  - name: web
-    image: ghcr.io/fabiocicerchia/sqlite-litestream
-    args: ["web"]
-    env:
-      - { name: DB_PATH, value: /data/app.db }
-    ports: [{ containerPort: 8081 }]
-    volumeMounts: [{ name: data, mountPath: /data }]
-```
-
-Read-only by default; set `WEB_WRITE=true` on the `web` container to allow
-edits. It's an extra container to opt into, not something the `litestream`
-container runs on its own — keep it off in prod if you don't need it, since
-`sqlite-web` is a development-grade Flask server, not hardened for exposure
-beyond a `kubectl port-forward`/trusted-network tunnel.
-
-See [`examples/basic`](examples/basic) for a runnable docker compose demo.
-
 ## Documentation
 
 Full docs live in [`docs/`](docs/) (also published via mkdocs). Start with
 [Getting Started](docs/getting-started.md) and the
 [Architecture](docs/architecture.md) overview.
-
-## Development
-
-`make build` / `make lint` / `make test` — the test does a real
-write → replicate → delete → restore round-trip with a file replica.
 
 ## Contributing
 
