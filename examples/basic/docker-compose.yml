@@ -10,6 +10,11 @@ services:
     volumes:
       - data:/data
       - replica:/replica
+    # Bounded so the example is copy-pasteable into somewhere real. An
+    # unbounded container is scheduled without guardrails and pushes nodes
+    # towards over-provisioning.
+    mem_limit: 128m
+    cpus: 0.5
 
 volumes:
   data:
