@@ -8,9 +8,8 @@ help: ## Show this help
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | \
 	  awk 'BEGIN {FS = ":.*?## "}; {printf "  %-10s %s\n", $$1, $$2}'
 
-setup: ## Install git hooks (gitleaks) and pre-commit
-	git config core.hooksPath .githooks
-	@command -v pre-commit >/dev/null 2>&1 && pre-commit install || true
+setup: ## Install the pre-commit hook
+	pre-commit install
 
 build: ## Build the image locally
 	docker build --build-arg LITESTREAM_VERSION=$(VERSION) -t $(IMAGE):$(VERSION) .
