@@ -69,11 +69,21 @@ spec:
           containerPort: {{ .Values.service.targetPort }}
           protocol: TCP
       {{- end }}
-      {{- with .Values.env }}
+      {{- if or .Values.env .Values.age.enabled }}
       env:
-        {{- range $k, $v := . }}
+        {{- range $k, $v := .Values.env }}
         - name: {{ $k }}
           value: {{ $v | quote }}
+        {{- end }}
+        {{- if .Values.age.enabled }}
+        {{- with .Values.age.recipients }}
+        - name: LITESTREAM_AGE_RECIPIENTS
+          value: {{ join "," . | quote }}
+        {{- end }}
+        {{- if .Values.age.identities.existingSecret }}
+        - name: LITESTREAM_AGE_IDENTITIES_FILE
+          value: {{ printf "%s/%s" .Values.age.identities.mountPath .Values.age.identities.key | quote }}
+        {{- end }}
         {{- end }}
       {{- end }}
       {{- with .Values.envFrom }}
@@ -94,6 +104,11 @@ spec:
           mountPath: {{ .Values.config.mountPath }}
           readOnly: true
         {{- end }}
+        {{- if and .Values.age.enabled .Values.age.identities.existingSecret }}
+        - name: age-identities
+          mountPath: {{ .Values.age.identities.mountPath }}
+          readOnly: true
+        {{- end }}
         {{- if .Values.persistence.enabled }}
         - name: data
           mountPath: {{ .Values.persistence.mountPath }}
@@ -106,6 +121,11 @@ spec:
     - name: config
       configMap:
         name: {{ include "app.fullname" . }}
+    {{- end }}
+    {{- if and .Values.age.enabled .Values.age.identities.existingSecret }}
+    - name: age-identities
+      secret:
+        secretName: {{ .Values.age.identities.existingSecret }}
     {{- end }}
     {{- if .Values.persistence.enabled }}
     - name: data

@@ -7,6 +7,9 @@ services:
     environment:
       DB_PATH: /data/app.db
       REPLICA_URL: file:///replica
+      # Optional client-side age encryption (uncomment + supply your own keys):
+      # LITESTREAM_AGE_RECIPIENTS: age1...            # encrypt on replicate
+      # LITESTREAM_AGE_IDENTITIES: AGE-SECRET-KEY-... # decrypt on restore
     volumes:
       - data:/data
       - replica:/replica
