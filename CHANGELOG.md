@@ -4,6 +4,13 @@ All notable changes to this project are documented here. The format is based
 on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and this project
 adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.2.2](https://github.com/fabiocicerchia/sqlite-litestream/compare/v0.2.1...v0.2.2) (2026-08-13)
+
+
+### Bug Fixes
+
+* security and code-quality findings ([#31](https://github.com/fabiocicerchia/sqlite-litestream/issues/31)) ([e8debcc](https://github.com/fabiocicerchia/sqlite-litestream/commit/e8debccb754649a2e053d735ec7fb4a6070958c1))
+
 ## [0.2.1](https://github.com/fabiocicerchia/sqlite-litestream/compare/v0.2.0...v0.2.1) (2026-08-08)
 
 
