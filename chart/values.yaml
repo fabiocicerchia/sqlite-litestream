@@ -22,6 +22,19 @@ config:
   mountPath: /etc/litestream
   files: {}
 
+# Optional client-side age encryption. Disabled = config byte-identical to before.
+# Recipients (public) are safe to inline; identities (secret) come from a Secret
+# mounted as a file (LITESTREAM_AGE_IDENTITIES_FILE), never plain pod env.
+# Lightweight alternative with zero template changes: set LITESTREAM_AGE_IDENTITIES
+# via `envFrom` (secretRef) above and put the recipient in `env`.
+age:
+  enabled: false
+  recipients: []            # ["age1..."] public keys, safe to inline
+  identities:
+    existingSecret: ""      # name of a Secret holding the age key file
+    key: age.key            # key within that Secret
+    mountPath: /etc/litestream-age
+
 # Only used when kind: CronJob.
 cron:
   schedule: "0 * * * *"

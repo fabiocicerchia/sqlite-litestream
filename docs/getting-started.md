@@ -29,6 +29,50 @@ from the replica if `DB_PATH` is missing, then replicates continuously.
 | `restore`        | force-restore `DB_PATH` from the replica, then exit       |
 | `web`            | sqlite-web UI on `:8081` (`WEB_WRITE=true` to allow writes)|
 
+## Encryption at rest
+
+Litestream can encrypt each replica client-side with an
+[age](https://age-encryption.org) keypair, so only ciphertext leaves the
+container. Recipients (the public key) encrypt on `replicate`; identities (the
+secret key) decrypt on `restore`.
+
+Generate a keypair:
+
+```sh
+age-keygen -o age.key          # prints the "age1..." public key to stderr
+```
+
+Replicate encrypted (`LITESTREAM_AGE_RECIPIENTS` is the `age1...` public key):
+
+```sh
+docker run --rm \
+  -e DB_PATH=/data/app.db \
+  -e REPLICA_URL=s3://my-bucket/app-db \
+  -e LITESTREAM_AGE_RECIPIENTS=age1qz... \
+  -v "$PWD/data:/data" \
+  ghcr.io/fabiocicerchia/sqlite-litestream
+```
+
+Restore (needs the identity secret key — this is all a cold start requires):
+
+```sh
+docker run --rm \
+  -e DB_PATH=/data/app.db \
+  -e REPLICA_URL=s3://my-bucket/app-db \
+  -e LITESTREAM_AGE_IDENTITIES="$(cat age.key)" \
+  -v "$PWD/data:/data" \
+  ghcr.io/fabiocicerchia/sqlite-litestream restore
+```
+
+Both vars accept multiple keys (comma/newline separated) and have a `_FILE`
+variant (`LITESTREAM_AGE_RECIPIENTS_FILE` / `LITESTREAM_AGE_IDENTITIES_FILE`)
+pointing at a mounted file — handy for wiring identities in from a Kubernetes
+Secret. Encryption is opt-in: with no keys set the config is unchanged.
+
+> These vars are read by the entrypoint only when it generates the config. If
+> you mount your own `/etc/litestream.yml`, the generator steps aside and you
+> own the `age:` block yourself.
+
 ## Next steps
 
 - See [Architecture](architecture.md) for how config generation works.

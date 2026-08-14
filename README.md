@@ -31,6 +31,21 @@ curl -fsSL https://raw.githubusercontent.com/fabiocicerchia/sqlite-litestream/ma
 | `restore`        | force-restore `DB_PATH`, then exit            |
 | `web`            | sqlite-web UI on `:8081` (read-only unless `WEB_WRITE=true`) |
 
+## Encryption (optional)
+
+Replicas can be encrypted client-side with an [age](https://age-encryption.org)
+keypair, so ciphertext is all that ever reaches the replica destination. Mint a
+key with `age-keygen -o age.key`, then set:
+
+| Env var | Role |
+| ------- | ---- |
+| `LITESTREAM_AGE_RECIPIENTS` | public key(s) — encrypt on `replicate` |
+| `LITESTREAM_AGE_IDENTITIES` | secret key(s) — decrypt on `restore` |
+
+Each accepts several keys (comma/newline separated) and has a `_FILE` variant
+pointing at a mounted file. It's opt-in: with no keys set, nothing changes. See
+[Getting Started](docs/getting-started.md#encryption-at-rest) for a full example.
+
 ## Documentation
 
 Full docs live in [`docs/`](docs/) (also published via mkdocs). Start with
