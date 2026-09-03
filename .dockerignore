@@ -2,3 +2,4 @@
 !Dockerfile
 !NOTICE
 !entrypoint.sh
+!requirements.txt
