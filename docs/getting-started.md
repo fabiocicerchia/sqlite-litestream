@@ -23,11 +23,11 @@ from the replica if `DB_PATH` is missing, then replicates continuously.
 
 ## Modes
 
-| Command (`args`) | Behaviour                                                 |
-| ---------------- | --------------------------------------------------------- |
-| `replicate`      | restore if missing, then replicate continuously (default) |
-| `restore`        | force-restore `DB_PATH` from the replica, then exit       |
-| `web`            | sqlite-web UI on `:8081` (`WEB_WRITE=true` to allow writes)|
+| Command (`args`) | Behaviour                                                   |
+| ---------------- | ----------------------------------------------------------- |
+| `replicate`      | restore if missing, then replicate continuously (default)   |
+| `restore`        | force-restore `DB_PATH` from the replica, then exit         |
+| `web`            | sqlite-web UI on `:8081` (`WEB_WRITE=true` to allow writes) |
 
 ## Encryption at rest
 

@@ -25,10 +25,10 @@ curl -fsSL https://raw.githubusercontent.com/fabiocicerchia/sqlite-litestream/ma
 
 ## Modes
 
-| Command (`args`) | Behaviour                                     |
-| ---------------- | --------------------------------------------- |
-| `replicate`      | restore if missing, then replicate (default)  |
-| `restore`        | force-restore `DB_PATH`, then exit            |
+| Command (`args`) | Behaviour                                                    |
+| ---------------- | ------------------------------------------------------------ |
+| `replicate`      | restore if missing, then replicate (default)                 |
+| `restore`        | force-restore `DB_PATH`, then exit                           |
 | `web`            | sqlite-web UI on `:8081` (read-only unless `WEB_WRITE=true`) |
 
 ## Encryption (optional)
@@ -37,10 +37,10 @@ Replicas can be encrypted client-side with an [age](https://age-encryption.org)
 keypair, so ciphertext is all that ever reaches the replica destination. Mint a
 key with `age-keygen -o age.key`, then set:
 
-| Env var | Role |
-| ------- | ---- |
+| Env var                     | Role                                   |
+| --------------------------- | -------------------------------------- |
 | `LITESTREAM_AGE_RECIPIENTS` | public key(s) — encrypt on `replicate` |
-| `LITESTREAM_AGE_IDENTITIES` | secret key(s) — decrypt on `restore` |
+| `LITESTREAM_AGE_IDENTITIES` | secret key(s) — decrypt on `restore`   |
 
 Each accepts several keys (comma/newline separated) and has a `_FILE` variant
 pointing at a mounted file. It's opt-in: with no keys set, nothing changes. See
