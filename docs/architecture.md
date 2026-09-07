@@ -25,7 +25,7 @@ It ships no application code of its own; the logic is a single POSIX
 
 ## Data flow
 
-```
+```text
 app writes ──▶ SQLite file (DB_PATH, shared volume)
                      │
                      ▼
