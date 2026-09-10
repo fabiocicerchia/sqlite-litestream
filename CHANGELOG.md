@@ -4,6 +4,14 @@ All notable changes to this project are documented here. The format is based
 on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and this project
 adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.5.1](https://github.com/fabiocicerchia/sqlite-litestream/compare/v0.5.0...v0.5.1) (2026-09-10)
+
+
+### Bug Fixes
+
+* **publish:** sign the images this workflow pushes ([#63](https://github.com/fabiocicerchia/sqlite-litestream/issues/63)) ([ba017c9](https://github.com/fabiocicerchia/sqlite-litestream/commit/ba017c990525a6f2c147d0d3e9593c454259dd22))
+* **release:** grant id-token on the job that calls the signing workflow ([#64](https://github.com/fabiocicerchia/sqlite-litestream/issues/64)) ([cf03bd3](https://github.com/fabiocicerchia/sqlite-litestream/commit/cf03bd359b6598051cbe75d8ced7b03cf25daa64))
+
 ## [0.5.0](https://github.com/fabiocicerchia/sqlite-litestream/compare/v0.4.2...v0.5.0) (2026-09-08)
 
 
