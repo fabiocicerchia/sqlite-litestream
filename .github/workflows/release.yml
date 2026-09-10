@@ -36,6 +36,16 @@ jobs:
         id: rp
         # Config in release-please-config.json + .release-please-manifest.json
         # (release-type: simple → tracks version.txt + CHANGELOG.md).
+        with:
+          # A release PR opened with GITHUB_TOKEN is authored by
+          # `github-actions[bot]`, which is not a repo collaborator: every
+          # `pull_request` workflow on that branch lands in `action_required`
+          # and waits for a human click, so the release PR never shows a CI
+          # result until someone approves 7 runs by hand. A PAT with
+          # contents+pull-requests write makes the PR author an identity with
+          # write access, and the checks just run. Falls back to GITHUB_TOKEN
+          # so a repo without the secret keeps today's behaviour.
+          token: ${{ secrets.RELEASE_PLEASE_TOKEN || secrets.GITHUB_TOKEN }}
 
   # Building the image has to hang off this job rather than off the release
   # event: the release release-please publishes carries GITHUB_TOKEN, and
