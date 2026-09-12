@@ -11,6 +11,21 @@ SQLite + **Litestream** streaming replication in a sidecar, with an optional
 **sqlite-web** admin UI. Production SQLite with disaster recovery, no
 database server to run.
 
+## Features
+
+- SQLite with **Litestream streaming replication** in a sidecar: production
+  SQLite with disaster recovery and no database server to run.
+- Restores automatically if the database is missing, then replicates — the
+  default mode needs no orchestration around it.
+- `restore` force-restores on demand; `web` serves a sqlite-web admin UI,
+  **read-only unless `WEB_WRITE=true`**.
+- Optional **client-side encryption** with an [age](https://age-encryption.org)
+  keypair, so ciphertext is all that ever reaches the replica destination.
+- Separate recipients and identities (encrypt on replicate, decrypt on
+  restore), each accepting several keys and each with a `_FILE` variant for
+  mounted secrets.
+- Encryption is strictly opt-in: with no keys set, nothing changes.
+
 ## Install
 
 ```sh
