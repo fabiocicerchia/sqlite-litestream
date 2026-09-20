@@ -4,6 +4,13 @@ All notable changes to this project are documented here. The format is based
 on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and this project
 adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.5.4](https://github.com/fabiocicerchia/sqlite-litestream/compare/v0.5.3...v0.5.4) (2026-09-20)
+
+
+### Bug Fixes
+
+* **docker:** bump ca-certificates to the version alpine 3.24 still has ([#85](https://github.com/fabiocicerchia/sqlite-litestream/issues/85)) ([a6573e3](https://github.com/fabiocicerchia/sqlite-litestream/commit/a6573e3f887f8d0b70c35929f8cfb0b6d3746967))
+
 ## [0.5.3](https://github.com/fabiocicerchia/sqlite-litestream/compare/v0.5.2...v0.5.3) (2026-09-20)
 
 
