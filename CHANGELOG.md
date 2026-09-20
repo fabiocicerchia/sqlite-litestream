@@ -4,6 +4,13 @@ All notable changes to this project are documented here. The format is based
 on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and this project
 adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.5.3](https://github.com/fabiocicerchia/sqlite-litestream/compare/v0.5.2...v0.5.3) (2026-09-20)
+
+
+### Bug Fixes
+
+* **ci:** keep actions: read on the job that uploads sarif ([#83](https://github.com/fabiocicerchia/sqlite-litestream/issues/83)) ([ba79e65](https://github.com/fabiocicerchia/sqlite-litestream/commit/ba79e65d3505077628b2122dc747489524f01b50))
+
 ## [0.5.2](https://github.com/fabiocicerchia/sqlite-litestream/compare/v0.5.1...v0.5.2) (2026-09-11)
 
 
