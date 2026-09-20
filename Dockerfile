@@ -5,7 +5,7 @@ ARG LITESTREAM_VERSION=0.3.13
 FROM alpine:3.24@sha256:28bd5fe8b56d1bd048e5babf5b10710ebe0bae67db86916198a6eec434943f8b AS fetch
 ARG LITESTREAM_VERSION
 ARG TARGETARCH=amd64
-RUN apk add --no-cache ca-certificates=20260611-r0
+RUN apk add --no-cache ca-certificates=20260909-r0
 SHELL ["/bin/ash", "-o", "pipefail", "-c"]
 RUN wget -qO- "https://github.com/benbjohnson/litestream/releases/download/v${LITESTREAM_VERSION}/litestream-v${LITESTREAM_VERSION}-linux-${TARGETARCH}.tar.gz" \
       | tar -xz -C / litestream
