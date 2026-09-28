@@ -10,7 +10,7 @@ redistributes the following third-party software, each under its own
 license:
 
   litestream 0.3.13  Apache-2.0     https://github.com/benbjohnson/litestream
-  sqlite-web 0.6.4   MIT            https://github.com/coleifer/sqlite-web
+  sqlite-web 0.8.2   MIT            https://github.com/coleifer/sqlite-web
   SQLite 3.49.2      public domain  https://www.sqlite.org/copyright.html
   tini 0.19.0        MIT            https://github.com/krallin/tini
 
