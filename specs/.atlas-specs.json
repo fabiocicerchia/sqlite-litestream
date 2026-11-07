@@ -1,0 +1,698 @@
+{
+ "excluded": {
+  "chart/check": [
+   {
+    "candidate": "The check runs Helm through a pinned alpine/helm:3.16.2 container rather than a local helm binary",
+    "covered_by": "",
+    "reason": "TECH_DEVTOOLING",
+    "source": "chart/check.sh#helm"
+   },
+   {
+    "candidate": "The check changes to its own directory so it can be run from anywhere",
+    "covered_by": "",
+    "reason": "INTERNAL_MECHANISM",
+    "source": "chart/check.sh#helm"
+   },
+   {
+    "candidate": "The check is not wired into make test or CI",
+    "covered_by": "",
+    "reason": "TECH_BUILD",
+    "source": "chart/check.sh#helm"
+   }
+  ],
+  "sqlite-litestream/dockerfile": [
+   {
+    "candidate": "Multi-stage build: a separate stage fetches Litestream for the target architecture (TARGETARCH, default amd64)",
+    "covered_by": "",
+    "reason": "TECH_BUILD",
+    "source": "Dockerfile#fetch"
+   },
+   {
+    "candidate": "Base images pinned by digest and apk packages pinned to exact versions (ca-certificates, sqlite, tini)",
+    "covered_by": "",
+    "reason": "TECH_BUILD",
+    "source": "Dockerfile#FROM"
+   },
+   {
+    "candidate": "The fetch stage uses an ash pipefail shell so a failed download breaks the build",
+    "covered_by": "",
+    "reason": "TECH_BUILD",
+    "source": "Dockerfile#SHELL"
+   },
+   {
+    "candidate": "The requirements file is removed and the pip cache disabled to keep the image small",
+    "covered_by": "",
+    "reason": "TECH_BUILD",
+    "source": "Dockerfile#RUN"
+   },
+   {
+    "candidate": "The NOTICE file is copied to /NOTICE",
+    "covered_by": "",
+    "reason": "TRIVIAL",
+    "source": "Dockerfile#COPY"
+   },
+   {
+    "candidate": "The entry point script is copied to /usr/local/bin/entrypoint.sh (mode dispatch lives in the entrypoint module)",
+    "covered_by": "",
+    "reason": "INTERNAL_MECHANISM",
+    "source": "Dockerfile#COPY"
+   },
+   {
+    "candidate": "No EXPOSE for the admin UI port 8081; operators have to publish the port themselves",
+    "covered_by": "",
+    "reason": "TECH_BUILD",
+    "source": "Dockerfile"
+   },
+   {
+    "candidate": "The Litestream version is overridable at build time with the LITESTREAM_VERSION build arg",
+    "covered_by": "",
+    "reason": "TECH_BUILD",
+    "source": "Dockerfile#ARG"
+   }
+  ],
+  "sqlite-litestream/entrypoint": [
+   {
+    "candidate": "Generated config is written to /tmp/litestream.yml with literal YAML indentation for the age block",
+    "covered_by": "",
+    "reason": "INTERNAL_MECHANISM",
+    "source": "entrypoint.sh#emit_age_role"
+   },
+   {
+    "candidate": "Unencrypted generated config stays byte-identical when no age keys are given",
+    "covered_by": "",
+    "reason": "INTERNAL_MECHANISM",
+    "source": "entrypoint.sh#replicate|restore"
+   },
+   {
+    "candidate": "age_keys pipeline ends in sed so an empty key set does not trip set -e",
+    "covered_by": "",
+    "reason": "INTERNAL_MECHANISM",
+    "source": "entrypoint.sh#age_keys"
+   },
+   {
+    "candidate": "Modes exec the final process so it receives signals directly",
+    "covered_by": "",
+    "reason": "INTERNAL_MECHANISM",
+    "source": "entrypoint.sh#replicate"
+   },
+   {
+    "candidate": "Restore mode refuses to overwrite an existing database (Litestream 0.3.13 behaviour)",
+    "covered_by": "recovery.forced-restore.restore-then-exit",
+    "reason": "UNVERIFIABLE",
+    "source": "entrypoint.sh#restore"
+   },
+   {
+    "candidate": "Mixed inline/file sources per role (recipients from file, identities inline)",
+    "covered_by": "security.replica-encryption.inline-key-wins-over-file",
+    "reason": "TRIVIAL",
+    "source": "entrypoint.sh#age_keys"
+   },
+   {
+    "candidate": "Unknown mode typo is executed as a command",
+    "covered_by": "configuration.mode-selection.custom-command-passthrough",
+    "reason": "DUPLICATE_OF",
+    "source": "entrypoint.sh#*"
+   },
+   {
+    "candidate": "shellcheck SC2086 disable for word-split FLAGS",
+    "covered_by": "",
+    "reason": "TECH_BUILD",
+    "source": "entrypoint.sh#web"
+   },
+   {
+    "candidate": "test.sh write-replicate-restore smoke round-trip",
+    "covered_by": "",
+    "reason": "TECH_DEVTOOLING",
+    "source": "test.sh"
+   }
+  ],
+  "sqlite-litestream/install": [
+   {
+    "candidate": "Progress line \"Pulling sqlite-litestream from GHCR...\" printed before the download",
+    "covered_by": "",
+    "reason": "TRIVIAL",
+    "source": "install.sh#IMAGE"
+   },
+   {
+    "candidate": "Installer is a bash script (#!/usr/bin/env bash) run via curl | bash, not POSIX sh",
+    "covered_by": "",
+    "reason": "TECH_BUILD",
+    "source": "install.sh#IMAGE"
+   },
+   {
+    "candidate": "Installer does not run, configure or start a container; it only downloads the image",
+    "covered_by": "distribution.installer.pulls-latest-published-image",
+    "reason": "DUPLICATE_OF",
+    "source": "install.sh#IMAGE"
+   }
+  ],
+  "sqlite-litestream/makefile": [
+   {
+    "candidate": "Running make with no target prints the list of available commands with descriptions",
+    "covered_by": "",
+    "reason": "TECH_DEVTOOLING",
+    "source": "Makefile#help"
+   },
+   {
+    "candidate": "make setup installs the pre-commit hook",
+    "covered_by": "",
+    "reason": "TECH_DEVTOOLING",
+    "source": "Makefile#setup"
+   },
+   {
+    "candidate": "make build builds the image locally tagged with VERSION",
+    "covered_by": "",
+    "reason": "TECH_BUILD",
+    "source": "Makefile#build"
+   },
+   {
+    "candidate": "make lint runs every pre-commit hook over every file",
+    "covered_by": "",
+    "reason": "TECH_BUILD",
+    "source": "Makefile#lint"
+   },
+   {
+    "candidate": "make test builds then runs the smoke test round-trip against the built image",
+    "covered_by": "",
+    "reason": "TECH_DEVTOOLING",
+    "source": "Makefile#test"
+   },
+   {
+    "candidate": "make install pulls the published image of VERSION",
+    "covered_by": "",
+    "reason": "TECH_DEVTOOLING",
+    "source": "Makefile#install"
+   },
+   {
+    "candidate": "make run builds and runs the image with ARGS as the subcommand (default replicate via the image CMD)",
+    "covered_by": "",
+    "reason": "TECH_DEVTOOLING",
+    "source": "Makefile#run"
+   },
+   {
+    "candidate": "make format runs the whitespace, end-of-file and line-ending fixers and ignores their non-zero exits",
+    "covered_by": "",
+    "reason": "TECH_BUILD",
+    "source": "Makefile#format"
+   },
+   {
+    "candidate": "make analyze refuses with an install hint and exit 69 when trivy is missing, otherwise scans for CRITICAL/HIGH vulns, misconfig and secrets",
+    "covered_by": "",
+    "reason": "TECH_BUILD",
+    "source": "Makefile#analyze"
+   },
+   {
+    "candidate": "IMAGE, VERSION and PLATFORMS can be overridden from the environment or command line",
+    "covered_by": "",
+    "reason": "INTERNAL_MECHANISM",
+    "source": "Makefile#IMAGE"
+   }
+  ]
+ },
+ "lifted": {
+  "chart/check": [],
+  "sqlite-litestream/dockerfile": [
+   {
+    "from_source": "Dockerfile#RUN",
+    "rule": "security.container.admin-ui-packages-hash-verified"
+   },
+   {
+    "from_source": "Dockerfile#fetch",
+    "rule": "security.container.litestream-binary-integrity"
+   },
+   {
+    "from_source": "Dockerfile#USER",
+    "rule": "security.container.runs-as-unprivileged-user"
+   }
+  ],
+  "sqlite-litestream/entrypoint": [],
+  "sqlite-litestream/install": [],
+  "sqlite-litestream/makefile": []
+ },
+ "retired": [],
+ "scenarios": {
+  "admin-ui.write-access.001": {
+   "file": "specs/admin-ui/write-access/admin-ui.feature",
+   "fingerprint": "92c28031a42c",
+   "human": false,
+   "rule": "admin-ui.web-browser.served-on-port-8081",
+   "source": "entrypoint.sh#web",
+   "status": "inferred",
+   "test": "",
+   "tests": []
+  },
+  "admin-ui.write-access.002": {
+   "file": "specs/admin-ui/write-access/admin-ui.feature",
+   "fingerprint": "92c28031a42c",
+   "human": false,
+   "rule": "admin-ui.write-access.read-only-unless-enabled",
+   "source": "entrypoint.sh#web",
+   "status": "inferred",
+   "test": "",
+   "tests": []
+  },
+  "configuration.custom-config.001": {
+   "file": "specs/configuration/custom-config/custom-config.feature",
+   "fingerprint": "a320fd225aaf",
+   "human": false,
+   "rule": "configuration.custom-config.mounted-config-wins",
+   "source": "entrypoint.sh#replicate|restore",
+   "status": "inferred",
+   "test": "",
+   "tests": []
+  },
+  "configuration.custom-config.002": {
+   "file": "specs/configuration/custom-config/custom-config.feature",
+   "fingerprint": "a320fd225aaf",
+   "human": false,
+   "rule": "configuration.custom-config.encryption-vars-ignored",
+   "source": "entrypoint.sh#replicate|restore",
+   "status": "inferred",
+   "test": "",
+   "tests": []
+  },
+  "configuration.mode-selection.001": {
+   "file": "specs/configuration/mode-selection/run-modes.feature",
+   "fingerprint": "c5dbf8041aed",
+   "human": false,
+   "rule": "configuration.mode-selection.replicate-by-default",
+   "source": "entrypoint.sh#replicate",
+   "status": "inferred",
+   "test": "",
+   "tests": []
+  },
+  "configuration.mode-selection.002": {
+   "file": "specs/configuration/mode-selection/run-modes.feature",
+   "fingerprint": "a320fd225aaf",
+   "human": false,
+   "rule": "configuration.mode-selection.replica-settings-only-for-litestream-modes",
+   "source": "entrypoint.sh#replicate|restore",
+   "status": "inferred",
+   "test": "",
+   "tests": []
+  },
+  "configuration.mode-selection.003": {
+   "file": "specs/configuration/mode-selection/run-modes.feature",
+   "fingerprint": "37670739638a",
+   "human": false,
+   "rule": "configuration.mode-selection.custom-command-passthrough",
+   "source": "entrypoint.sh#*",
+   "status": "inferred",
+   "test": "",
+   "tests": []
+  },
+  "configuration.simple-setup.001": {
+   "file": "specs/configuration/simple-setup/env-based-setup.feature",
+   "fingerprint": "a320fd225aaf",
+   "human": false,
+   "rule": "configuration.simple-setup.replica-from-env",
+   "source": "entrypoint.sh#replicate|restore",
+   "status": "inferred",
+   "test": "",
+   "tests": []
+  },
+  "configuration.simple-setup.002": {
+   "file": "specs/configuration/simple-setup/env-based-setup.feature",
+   "fingerprint": "a320fd225aaf",
+   "human": false,
+   "rule": "configuration.simple-setup.replica-url-required",
+   "source": "entrypoint.sh#replicate|restore",
+   "status": "inferred",
+   "test": "",
+   "tests": []
+  },
+  "distribution.container-image.001": {
+   "file": "specs/distribution/container-image/container-image.feature",
+   "fingerprint": "3ea062926810",
+   "human": false,
+   "rule": "distribution.image.default-command-replicate",
+   "source": "Dockerfile#CMD",
+   "status": "inferred",
+   "test": "",
+   "tests": []
+  },
+  "distribution.container-image.002": {
+   "file": "specs/distribution/container-image/container-image.feature",
+   "fingerprint": "0eff2c1c3265",
+   "human": false,
+   "rule": "distribution.image.health-reflects-litestream-presence",
+   "source": "Dockerfile#HEALTHCHECK",
+   "status": "inferred",
+   "test": "",
+   "tests": []
+  },
+  "distribution.container-image.003": {
+   "file": "specs/distribution/container-image/container-image.feature",
+   "fingerprint": "6f54528bd03c",
+   "human": false,
+   "rule": "distribution.image.bundled-tools",
+   "source": "Dockerfile#RUN",
+   "status": "inferred",
+   "test": "",
+   "tests": []
+  },
+  "distribution.container-image.004": {
+   "file": "specs/distribution/container-image/container-image.feature",
+   "fingerprint": "3bc65088b94d",
+   "human": false,
+   "rule": "distribution.image.oci-metadata",
+   "source": "Dockerfile#LABEL",
+   "status": "inferred",
+   "test": "",
+   "tests": []
+  },
+  "distribution.installer.001": {
+   "file": "specs/distribution/installer/one-line-installer.feature",
+   "fingerprint": "a400bf2a8155",
+   "human": false,
+   "rule": "distribution.installer.pulls-latest-published-image",
+   "source": "install.sh#IMAGE",
+   "status": "inferred",
+   "test": "",
+   "tests": []
+  },
+  "distribution.installer.002": {
+   "file": "specs/distribution/installer/one-line-installer.feature",
+   "fingerprint": "a400bf2a8155",
+   "human": false,
+   "rule": "distribution.installer.no-ready-claim-on-failed-pull",
+   "source": "install.sh#IMAGE",
+   "status": "inferred",
+   "test": "",
+   "tests": []
+  },
+  "distribution.kubernetes-chart.001": {
+   "file": "specs/distribution/kubernetes-chart/chart-render-check.feature",
+   "fingerprint": "74d90975d59c",
+   "human": false,
+   "rule": "distribution.chart-check.default-values-render",
+   "source": "chart/check.sh#helm",
+   "status": "inferred",
+   "test": "",
+   "tests": []
+  },
+  "distribution.kubernetes-chart.002": {
+   "file": "specs/distribution/kubernetes-chart/chart-render-check.feature",
+   "fingerprint": "74d90975d59c",
+   "human": false,
+   "rule": "distribution.chart-check.render-failure-refused",
+   "source": "chart/check.sh#helm",
+   "status": "inferred",
+   "test": "",
+   "tests": []
+  },
+  "distribution.kubernetes-chart.003": {
+   "file": "specs/distribution/kubernetes-chart/chart-render-check.feature",
+   "fingerprint": "74d90975d59c",
+   "human": false,
+   "rule": "distribution.chart-check.encryption-identities-rendered",
+   "source": "chart/check.sh#helm",
+   "status": "inferred",
+   "test": "",
+   "tests": []
+  },
+  "distribution.publishing.001": {
+   "file": "specs/distribution/publishing/publishing-releases.feature",
+   "fingerprint": "5b9abe3e5464",
+   "human": false,
+   "rule": "distribution.publishing.release-multi-arch-versioned-and-latest",
+   "source": "Makefile#release",
+   "status": "inferred",
+   "test": "",
+   "tests": []
+  },
+  "distribution.publishing.002": {
+   "file": "specs/distribution/publishing/publishing-releases.feature",
+   "fingerprint": "08d967ca4f37",
+   "human": false,
+   "rule": "distribution.publishing.single-arch-push-leaves-latest",
+   "source": "Makefile#push",
+   "status": "inferred",
+   "test": "",
+   "tests": []
+  },
+  "distribution.publishing.003": {
+   "file": "specs/distribution/publishing/publishing-releases.feature",
+   "fingerprint": "5b9abe3e5464",
+   "human": false,
+   "rule": "distribution.publishing.image-tag-matches-litestream-version",
+   "source": "Makefile#release",
+   "status": "inferred",
+   "test": "",
+   "tests": []
+  },
+  "recovery.forced-restore.001": {
+   "file": "specs/recovery/forced-restore/on-demand-restore.feature",
+   "fingerprint": "a7b2f19b9a2c",
+   "human": false,
+   "rule": "recovery.forced-restore.restore-then-exit",
+   "source": "entrypoint.sh#restore",
+   "status": "inferred",
+   "test": "",
+   "tests": []
+  },
+  "replication.auto-restore-on-start.001": {
+   "file": "specs/replication/auto-restore-on-start/restore-on-first-start.feature",
+   "fingerprint": "c5dbf8041aed",
+   "human": false,
+   "rule": "replication.auto-restore-on-start.restore-when-missing",
+   "source": "entrypoint.sh#replicate",
+   "status": "inferred",
+   "test": "",
+   "tests": []
+  },
+  "replication.auto-restore-on-start.002": {
+   "file": "specs/replication/auto-restore-on-start/restore-on-first-start.feature",
+   "fingerprint": "c5dbf8041aed",
+   "human": false,
+   "rule": "replication.auto-restore-on-start.fresh-start-without-replica",
+   "source": "entrypoint.sh#replicate",
+   "status": "inferred",
+   "test": "",
+   "tests": []
+  },
+  "replication.auto-restore-on-start.003": {
+   "file": "specs/replication/auto-restore-on-start/restore-on-first-start.feature",
+   "fingerprint": "c5dbf8041aed",
+   "human": false,
+   "rule": "replication.auto-restore-on-start.existing-database-kept",
+   "source": "entrypoint.sh#replicate",
+   "status": "inferred",
+   "test": "",
+   "tests": []
+  },
+  "security.container-hardening.001": {
+   "file": "specs/security/container-hardening/container-hardening.feature",
+   "fingerprint": "13b90871da62",
+   "human": false,
+   "rule": "security.container.runs-as-unprivileged-user",
+   "source": "Dockerfile#USER",
+   "status": "inferred",
+   "test": "",
+   "tests": []
+  },
+  "security.container-hardening.002": {
+   "file": "specs/security/container-hardening/container-hardening.feature",
+   "fingerprint": "504612e80782",
+   "human": false,
+   "rule": "security.container.clean-shutdown-under-init",
+   "source": "Dockerfile#ENTRYPOINT",
+   "status": "inferred",
+   "test": "",
+   "tests": []
+  },
+  "security.container-hardening.003": {
+   "file": "specs/security/container-hardening/container-hardening.feature",
+   "fingerprint": "6f54528bd03c",
+   "human": false,
+   "rule": "security.container.admin-ui-packages-hash-verified",
+   "source": "Dockerfile#RUN",
+   "status": "inferred",
+   "test": "",
+   "tests": []
+  },
+  "security.container-hardening.004": {
+   "file": "specs/security/container-hardening/container-hardening.feature",
+   "fingerprint": "d89d3d1d54a8",
+   "human": false,
+   "rule": "security.container.litestream-binary-integrity",
+   "source": "Dockerfile#fetch",
+   "status": "inferred",
+   "test": "",
+   "tests": []
+  },
+  "security.replica-encryption.001": {
+   "file": "specs/security/replica-encryption/replica-encryption.feature",
+   "fingerprint": "d587d9e68b10",
+   "human": false,
+   "rule": "security.replica-encryption.keys-from-env",
+   "source": "entrypoint.sh#age_keys",
+   "status": "inferred",
+   "test": "",
+   "tests": []
+  },
+  "security.replica-encryption.002": {
+   "file": "specs/security/replica-encryption/replica-encryption.feature",
+   "fingerprint": "d587d9e68b10",
+   "human": false,
+   "rule": "security.replica-encryption.inline-key-wins-over-file",
+   "source": "entrypoint.sh#age_keys",
+   "status": "inferred",
+   "test": "",
+   "tests": []
+  },
+  "security.replica-encryption.003": {
+   "file": "specs/security/replica-encryption/replica-encryption.feature",
+   "fingerprint": "d587d9e68b10",
+   "human": false,
+   "rule": "security.replica-encryption.missing-key-file-refused",
+   "source": "entrypoint.sh#age_keys",
+   "status": "inferred",
+   "test": "",
+   "tests": []
+  }
+ },
+ "taxonomy": {
+  "domains": [
+   {
+    "areas": [
+     {
+      "description": "The default mode that streams every database change to the configured replica until stopped.",
+      "slug": "continuous-replication",
+      "title": "Continuous replication"
+     },
+     {
+      "description": "Recovering the database from the replica automatically when it is missing at startup, and starting fresh when no replica exists yet.",
+      "slug": "auto-restore-on-start",
+      "title": "Restore on first start"
+     }
+    ],
+    "description": "Continuously streaming the SQLite database to a remote replica so it is never lost.",
+    "slug": "replication",
+    "title": "Backup & Replication"
+   },
+   {
+    "areas": [
+     {
+      "description": "A one-shot mode that overwrites the local database from the replica and then exits.",
+      "slug": "forced-restore",
+      "title": "On-demand restore"
+     }
+    ],
+    "description": "Bringing a database back from its replica on demand.",
+    "slug": "recovery",
+    "title": "Disaster Recovery"
+   },
+   {
+    "areas": [
+     {
+      "description": "Generating the replication config from a database path and replica URL, with sensible defaults and a clear error when the URL is missing.",
+      "slug": "simple-setup",
+      "title": "Environment-based setup"
+     },
+     {
+      "description": "Taking full manual control by mounting a complete Litestream config file instead of using environment variables.",
+      "slug": "custom-config",
+      "title": "Bring your own config"
+     },
+     {
+      "description": "Choosing between replicate, restore, admin UI, or running an arbitrary command in the container.",
+      "slug": "mode-selection",
+      "title": "Run modes"
+     }
+    ],
+    "description": "How operators tell the sidecar which database to protect and where to send it.",
+    "slug": "configuration",
+    "title": "Configuration"
+   },
+   {
+    "areas": [
+     {
+      "description": "Optional client-side age encryption of replicas, with public keys for writing and secret keys for restoring, supplied inline or from mounted files.",
+      "slug": "replica-encryption",
+      "title": "Replica encryption"
+     },
+     {
+      "description": "Running as an unprivileged user under a proper init process, with pinned and hash-verified components.",
+      "slug": "container-hardening",
+      "title": "Container hardening"
+     }
+    ],
+    "description": "Keeping replicated data and the running container safe.",
+    "slug": "security",
+    "title": "Security & Encryption"
+   },
+   {
+    "areas": [
+     {
+      "description": "A sqlite-web interface served on port 8081 for inspecting the database.",
+      "slug": "web-browser",
+      "title": "Web database browser"
+     },
+     {
+      "description": "Keeping the admin UI read-only by default and allowing edits only when explicitly enabled.",
+      "slug": "write-access",
+      "title": "Write access control"
+     }
+    ],
+    "description": "Browsing and editing the database through a web interface.",
+    "slug": "admin-ui",
+    "title": "Database Admin UI"
+   },
+   {
+    "areas": [
+     {
+      "description": "The published image bundling SQLite, Litestream and sqlite-web, with its metadata, health check and default command.",
+      "slug": "container-image",
+      "title": "Container image"
+     },
+     {
+      "description": "A script that pulls the latest published image and points users at the documentation.",
+      "slug": "installer",
+      "title": "One-line installer"
+     },
+     {
+      "description": "Checking that the Helm chart renders cleanly, including its optional encryption settings.",
+      "slug": "kubernetes-chart",
+      "title": "Kubernetes chart validation"
+     },
+     {
+      "description": "Pushing single-architecture and multi-architecture (amd64/arm64) versioned and latest images.",
+      "slug": "publishing",
+      "title": "Publishing releases"
+     }
+    ],
+    "description": "Getting the image onto machines and clusters.",
+    "slug": "distribution",
+    "title": "Distribution & Deployment"
+   },
+   {
+    "areas": [
+     {
+      "description": "Building the image locally, pulling a published version, and running it with chosen arguments.",
+      "slug": "local-build-run",
+      "title": "Local build & run"
+     },
+     {
+      "description": "Linting, auto-formatting, and security scanning for vulnerabilities, misconfiguration and secrets.",
+      "slug": "quality-gates",
+      "title": "Quality gates"
+     },
+     {
+      "description": "An end-to-end write, replicate and restore round-trip against the built image.",
+      "slug": "smoke-testing",
+      "title": "Smoke testing"
+     },
+     {
+      "description": "Installing the pre-commit hooks and listing every available command.",
+      "slug": "contributor-setup",
+      "title": "Contributor setup & help"
+     }
+    ],
+    "description": "Everyday commands contributors use to build, check and test the project.",
+    "slug": "developer-tooling",
+    "title": "Developer Tooling"
+   }
+  ]
+ }
+}
