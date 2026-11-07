@@ -9,6 +9,7 @@ Feature: Validating the Kubernetes chart
   Scenario: The chart passes the check when it lints and renders with its default values
     Given the chart lints without errors
     And the chart rendered with default values contains a container image
+    And the chart rendered with age encryption and an identities secret sets LITESTREAM_AGE_IDENTITIES_FILE
     When the chart maintainer runs the chart check
     Then the check prints "OK"
     And the check exits with status 0

@@ -9,8 +9,8 @@ Feature: Giving the documentation its look
   Scenario: The splash page and the docs share one accent palette
     Given the accent pair is cyan #22d3ee and indigo #6366f1
     When a reader opens the splash page and then the rendered docs
-    Then the primary colour of both is indigo #6366f1
-    And the interactive accent of both is cyan #22d3ee
+    Then both take their colours from that one accent pair
+    And in the docs the primary colour is indigo #6366f1 and the interactive accent is cyan #22d3ee
     And primary buttons on both show a cyan-to-indigo gradient
 
   @id:docs.documentation-site.theme-and-branding.002 @rule:docs.theme.links-legible-per-scheme @inferred @source:docs/stylesheets/extra.css#[data-md-color-scheme="slate"]

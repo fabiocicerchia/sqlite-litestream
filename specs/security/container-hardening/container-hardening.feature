@@ -21,7 +21,7 @@ Feature: Running the sidecar safely
     And no orphaned processes are left behind
 
   @id:security.container-hardening.003 @rule:security.container.admin-ui-packages-hash-verified @inferred @source:Dockerfile#RUN
-  Scenario: The admin UI's packages are installed only when their published hashes match
+  Scenario: The admin UI's packages are installed only when their locked hashes match
     Given the admin UI's Python packages are locked to exact versions with sha256 hashes
     When the maintainer builds the image and one of those packages does not match its locked hash
     Then the image build fails
