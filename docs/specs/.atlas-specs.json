@@ -1,0 +1,250 @@
+{
+ "excluded": {
+  "stylesheets/extra": [
+   {
+    "candidate": "Translucent blurred header with hairline divider and shadow on scroll",
+    "covered_by": "",
+    "reason": "TRIVIAL",
+    "source": "docs/stylesheets/extra.css#.md-header"
+   },
+   {
+    "candidate": "Navigation tab opacity and active-tab emphasis",
+    "covered_by": "",
+    "reason": "TRIVIAL",
+    "source": "docs/stylesheets/extra.css#.md-tabs__link"
+   },
+   {
+    "candidate": "Heading weights, letter-spacing and margins",
+    "covered_by": "",
+    "reason": "TRIVIAL",
+    "source": "docs/stylesheets/extra.css#.md-typeset h1"
+   },
+   {
+    "candidate": "Rounded, bordered code blocks",
+    "covered_by": "",
+    "reason": "TRIVIAL",
+    "source": "docs/stylesheets/extra.css#.md-typeset .highlight"
+   },
+   {
+    "candidate": "Card-style tables with uppercase headers (comment says they scroll, but the rule itself sets overflow hidden; scrolling comes from Material's wrapper)",
+    "covered_by": "",
+    "reason": "TRIVIAL",
+    "source": "docs/stylesheets/extra.css#.md-typeset table:not([class])"
+   },
+   {
+    "candidate": "Pill-shaped buttons with hover lift",
+    "covered_by": "",
+    "reason": "TRIVIAL",
+    "source": "docs/stylesheets/extra.css#.md-typeset .md-button"
+   },
+   {
+    "candidate": "Home hero gradient title and tagline styling",
+    "covered_by": "",
+    "reason": "TRIVIAL",
+    "source": "docs/stylesheets/extra.css#.md-typeset .hero"
+   },
+   {
+    "candidate": "Feature card borders, hover lift and accent-coloured icons (dark hover shadow applies only to list cards, not .card)",
+    "covered_by": "",
+    "reason": "TRIVIAL",
+    "source": "docs/stylesheets/extra.css#.md-typeset .grid.cards > ul > li"
+   },
+   {
+    "candidate": "Sidebar title and active nav link weight",
+    "covered_by": "",
+    "reason": "TRIVIAL",
+    "source": "docs/stylesheets/extra.css#.md-nav__title"
+   },
+   {
+    "candidate": "Footer background, divider and muted link colours",
+    "covered_by": "",
+    "reason": "TRIVIAL",
+    "source": "docs/stylesheets/extra.css#.md-footer-meta"
+   },
+   {
+    "candidate": "Smooth scrolling to anchors",
+    "covered_by": "",
+    "reason": "TRIVIAL",
+    "source": "docs/stylesheets/extra.css#html"
+   },
+   {
+    "candidate": "Portfolio colour-cluster guidance for choosing the accent pair",
+    "covered_by": "",
+    "reason": "TECH_DEVTOOLING",
+    "source": "docs/stylesheets/extra.css#:root"
+   }
+  ]
+ },
+ "lifted": {
+  "stylesheets/extra": []
+ },
+ "retired": [],
+ "scenarios": {
+  "docs.documentation-site.theme-and-branding.001": {
+   "file": "docs/specs/documentation-site/theme-and-branding/docs-theme.feature",
+   "fingerprint": "d1e8fee7d3b2",
+   "human": false,
+   "rule": "docs.theme.single-shared-palette",
+   "source": "docs/stylesheets/extra.css#:root",
+   "status": "inferred",
+   "test": "",
+   "tests": []
+  },
+  "docs.documentation-site.theme-and-branding.002": {
+   "file": "docs/specs/documentation-site/theme-and-branding/docs-theme.feature",
+   "fingerprint": "433084a194b6",
+   "human": false,
+   "rule": "docs.theme.links-legible-per-scheme",
+   "source": "docs/stylesheets/extra.css#[data-md-color-scheme=\"slate\"]",
+   "status": "inferred",
+   "test": "",
+   "tests": []
+  },
+  "docs.documentation-site.theme-and-branding.003": {
+   "file": "docs/specs/documentation-site/theme-and-branding/docs-theme.feature",
+   "fingerprint": "c702704e5aae",
+   "human": false,
+   "rule": "docs.theme.no-placeholder-logo",
+   "source": "docs/stylesheets/extra.css#.md-header__button.md-logo",
+   "status": "inferred",
+   "test": "",
+   "tests": []
+  },
+  "docs.documentation-site.theme-and-branding.004": {
+   "file": "docs/specs/documentation-site/theme-and-branding/docs-theme.feature",
+   "fingerprint": "d1e8fee7d3b2",
+   "human": false,
+   "rule": "docs.privacy.no-web-fonts",
+   "source": "docs/stylesheets/extra.css#:root",
+   "status": "inferred",
+   "test": "",
+   "tests": []
+  }
+ },
+ "taxonomy": {
+  "domains": [
+   {
+    "areas": [
+     {
+      "description": "Running Litestream as a sidecar that ships WAL changes to the replica as they happen.",
+      "slug": "continuous-streaming",
+      "title": "Continuous streaming"
+     },
+     {
+      "description": "Choosing where the replica lives (S3-compatible storage, file paths and other replica URLs).",
+      "slug": "replica-targets",
+      "title": "Replica targets"
+     }
+    ],
+    "description": "Continuously streaming a SQLite database's changes to an off-site replica.",
+    "slug": "replication",
+    "title": "Replication"
+   },
+   {
+    "areas": [
+     {
+      "description": "Rebuilding the local database from the latest replica before the app starts.",
+      "slug": "restore",
+      "title": "Restore"
+     },
+     {
+      "description": "Proving data written and replicated can be restored intact.",
+      "slug": "round-trip-verification",
+      "title": "Round-trip verification"
+     }
+    ],
+    "description": "Getting a database back from its replica.",
+    "slug": "recovery",
+    "title": "Recovery"
+   },
+   {
+    "areas": [
+     {
+      "description": "Starting the sqlite-web browser UI against the database.",
+      "slug": "web-mode",
+      "title": "Web mode"
+     },
+     {
+      "description": "Inspecting tables, running queries and editing rows from the browser.",
+      "slug": "data-browsing",
+      "title": "Data browsing"
+     }
+    ],
+    "description": "The optional sqlite-web interface for browsing and editing the database.",
+    "slug": "admin-ui",
+    "title": "Database admin UI"
+   },
+   {
+    "areas": [
+     {
+      "description": "Picking replicate, restore or web behaviour when the container starts.",
+      "slug": "mode-selection",
+      "title": "Mode selection"
+     },
+     {
+      "description": "Generating the Litestream config from DB_PATH, REPLICA_URL and related variables.",
+      "slug": "environment-settings",
+      "title": "Environment settings"
+     }
+    ],
+    "description": "How users tell the container what to do and where the data lives.",
+    "slug": "configuration",
+    "title": "Configuration"
+   },
+   {
+    "areas": [
+     {
+      "description": "The shared accent palette, typography, light/dark schemes and logo handling that give the docs their look.",
+      "slug": "theme-and-branding",
+      "title": "Theme and branding"
+     },
+     {
+      "description": "The hero banner, tagline, call-to-action buttons and feature cards on the landing page.",
+      "slug": "home-page",
+      "title": "Home page"
+     },
+     {
+      "description": "Header, navigation tabs, sidebar, code blocks, tables and footer styling that make the guides easy to read.",
+      "slug": "reading-experience",
+      "title": "Reading experience"
+     },
+     {
+      "description": "Docs that load no web fonts, CDNs or analytics so they work offline and track no one.",
+      "slug": "privacy-and-offline",
+      "title": "Privacy and offline"
+     }
+    ],
+    "description": "The public docs and splash page that explain and market the product.",
+    "slug": "documentation-site",
+    "title": "Documentation site"
+   },
+   {
+    "areas": [
+     {
+      "description": "Building the minimal container image with pinned packages.",
+      "slug": "image-build",
+      "title": "Image build"
+     },
+     {
+      "description": "Publishing single- and multi-arch images with version and latest tags.",
+      "slug": "release",
+      "title": "Release"
+     },
+     {
+      "description": "Linting, smoke tests and pre-commit hooks that gate changes.",
+      "slug": "quality-checks",
+      "title": "Quality checks"
+     },
+     {
+      "description": "Pinned actions, secret scanning, dependency updates and protected release paths.",
+      "slug": "supply-chain-security",
+      "title": "Supply-chain security"
+     }
+    ],
+    "description": "Building, testing, securing and shipping the image.",
+    "slug": "operations",
+    "title": "Operations"
+   }
+  ]
+ }
+}
