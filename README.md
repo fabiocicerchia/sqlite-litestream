@@ -1,5 +1,11 @@
 # sqlite-litestream
 
+> [!WARNING]
+> **This project is retired** and no longer maintained. Use the official
+> [litestream/litestream](https://hub.docker.com/r/litestream/litestream) image
+> instead: it is published with a tag for every Litestream release and runs as
+> the replication sidecar beside your application.
+
 [![CI](https://github.com/fabiocicerchia/sqlite-litestream/actions/workflows/code-quality.yml/badge.svg)](https://github.com/fabiocicerchia/sqlite-litestream/actions/workflows/code-quality.yml)
 [![Security](https://github.com/fabiocicerchia/sqlite-litestream/actions/workflows/security.yml/badge.svg)](https://github.com/fabiocicerchia/sqlite-litestream/actions/workflows/security.yml)
 [![License: Apache 2.0](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](LICENSE)
